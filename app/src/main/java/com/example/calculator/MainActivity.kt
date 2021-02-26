@@ -6,9 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.room.Room
 import net.objecthunter.exp4j.ExpressionBuilder
-import java.lang.IndexOutOfBoundsException
 
 class MainActivity() : AppCompatActivity() {
 
@@ -52,7 +50,8 @@ class MainActivity() : AppCompatActivity() {
 
 
     fun onClear(view: View) {
-        this.outputTextView.text = ""
+        this.outputTextView.text =
+            outputTextView.text.substring(0, outputTextView.length() - outputTextView.length())
         lastNumeric = false
         stateError = false
         lastDot = false
@@ -70,43 +69,37 @@ class MainActivity() : AppCompatActivity() {
                     .historyDatabaseDao
                     .insert(history)
             }.start()
-                try {
-                    val result = expression.evaluate()
-                    outputTextView.text = result.toString()
-                    lastDot = true
-                } catch (ex: Exception) {
-                    outputTextView.text = getString(R.string.error)
-                    stateError = true
-                    lastNumeric = false
-                }
+            try {
+                val result = expression.evaluate()
+                outputTextView.text = result.toString()
+                lastDot = true
+            } catch (ex: Exception) {
+                outputTextView.text = getString(R.string.error)
+                stateError = true
+                lastNumeric = false
             }
         }
+    }
 
 
     fun onHist(view: View) {
         Thread {
-            val history = getHistory()
-            outputTextView.text = history.toString()
-        }.start()
-    }
-
-    private fun getHistory() {
-        Thread {
-            HistoryDatabase.getInstance(applicationContext)
-                .historyDatabaseDao.getHistory()
+            val hist = HistoryDatabase.getInstance(applicationContext)
+                .historyDatabaseDao.getHistory().equation
+            outputTextView.text = hist
+            lastNumeric = true
         }.start()
     }
 
     fun onDel(view: View) {
         if (this.outputTextView.text != "") {
             try {
-                this.outputTextView.text = outputTextView.text.substring(0, outputTextView.length() - 1)
-            }
-            catch (e: IndexOutOfBoundsException) {
+                this.outputTextView.text =
+                    outputTextView.text.substring(0, outputTextView.length() - 1)
+            } catch (e: IndexOutOfBoundsException) {
                 this.outputTextView.text = ""
             }
-        }
-        else{
+        } else {
             this.outputTextView.text = ""
         }
     }

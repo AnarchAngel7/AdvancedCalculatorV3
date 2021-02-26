@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorAccent">
 
     <TextView
         android:id="@+id/txtInput"
@@ -41,7 +41,8 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/btnHist"
@@ -50,17 +51,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onHist"
-                android:text="H"
+                android:text="@string/h"
                 android:textSize="25sp" />
 
             <Button
                 android:id="@+id/back"
                 style="?android:attr/buttonBarButtonStyle"
-                android:layout_width="117dp"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:onClick="onDel"
-                android:text="DEL"
+                android:text="@string/del"
                 android:textSize="25sp" />
 
             <Button
@@ -75,11 +76,13 @@
 
 
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/btnSeven"
@@ -121,11 +124,13 @@
                 android:text="@string/div"
                 android:textSize="25sp" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/btnFour"
@@ -167,11 +172,13 @@
                 android:text="@string/mul"
                 android:textSize="25sp" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/btnOne"
@@ -213,11 +220,13 @@
                 android:text="@string/sub"
                 android:textSize="25sp" />
         </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:gravity="center">
+            android:gravity="center"
+            android:textAlignment="center">
 
             <Button
                 android:id="@+id/btnDecimal"
