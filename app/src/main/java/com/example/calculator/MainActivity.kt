@@ -2,25 +2,32 @@ package com.example.calculator
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import net.objecthunter.exp4j.ExpressionBuilder
 
-class MainActivity() : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
     lateinit var outputTextView: TextView
     private var lastNumeric: Boolean = false
     private var stateError: Boolean = false
     private var lastDot: Boolean = false
+    private lateinit var btn: Button
+    private var myhistory: MutableList<String> = mutableListOf()
+    var h = 0
+    var newH = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         outputTextView = findViewById(R.id.txtInput)
+        btn = findViewById(R.id.btnEqual)
     }
+
 
     fun onDigit(view: View) {
         if (stateError) {
@@ -58,7 +65,6 @@ class MainActivity() : AppCompatActivity() {
     }
 
     fun onEqual(view: View) {
-
         if (lastNumeric && !stateError) {
             val history = History()
             val text = outputTextView.text.toString()
@@ -85,10 +91,36 @@ class MainActivity() : AppCompatActivity() {
     fun onHist(view: View) {
         Thread {
             val hist = HistoryDatabase.getInstance(applicationContext)
-                .historyDatabaseDao.getHistory().equation
+                .historyDatabaseDao.getLastHistory().equation
             outputTextView.text = hist
             lastNumeric = true
         }.start()
+    }
+
+    fun onHistList(view: View) {
+        Thread {
+            val hist: List<History> = HistoryDatabase.getInstance(applicationContext)
+                .historyDatabaseDao
+                .getHistory()
+            try {
+                for (i in hist.indices) {
+                    myhistory.add(hist[i].equation)
+                }
+                val getVal: Int = hist.size - h
+                if (getVal < 0) {
+                    h = 1
+                    outputTextView.text = myhistory[hist.size - h]
+                } else {
+                    outputTextView.text = myhistory[getVal]
+                    lastNumeric = true
+                }
+            } catch (E: Exception) {
+                outputTextView.text = E.toString()
+                Log.d("Exception", E.toString())
+            }
+            newH = hist.size
+        }.start()
+        h += 1
     }
 
     fun onDel(view: View) {
@@ -103,6 +135,5 @@ class MainActivity() : AppCompatActivity() {
             this.outputTextView.text = ""
         }
     }
-
 
 }
