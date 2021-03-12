@@ -16,8 +16,9 @@
     <string name="dec">.</string>
     <string name="equals">=</string>
     <string name="_0">0</string>
-    <string name="clr">CLR</string>
+    <string name="clr">AC</string>
     <string name="add">+</string>
     <string name="h">H</string>
-    <string name="del">DEL</string>
+    <string name="del">⌫</string>
+    <string name="r">R</string>
 </resources>

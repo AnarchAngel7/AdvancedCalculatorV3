@@ -11,8 +11,11 @@ interface HistoryDatabaseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(history: History)
 
-    @Query("SELECT * FROM history_table ORDER BY histId DESC ")
-    fun getHistory(): History
+    @Query("SELECT * FROM history_table ORDER BY histId")
+    fun getLastHistory(): History
+
+    @Query("SELECT * FROM history_table ORDER BY histId")
+    fun getHistory(): List<History>
 
 }
 
